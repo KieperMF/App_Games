@@ -11,7 +11,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   @override
-  void initState(){
+  void initState() {
     super.initState();
     loadGames();
   }
@@ -19,7 +19,7 @@ class _HomePageState extends State<HomePage> {
   final gamesRequest = GamesRequest();
   int counter = 1;
 
-  Future<void> loadGames() async{
+  Future<void> loadGames() async {
     await gamesRequest.request();
     setState(() {});
   }
@@ -27,42 +27,84 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: (Colors.black),
+      backgroundColor: (Colors.indigo[700]),
       appBar: AppBar(
-        title: const Text('Melhores Jogos', style: TextStyle(color: Colors.white),),
-        backgroundColor: Colors.black,
+        title: const Text(
+          'Melhores Jogos',
+          style: TextStyle(color: Colors.white),
+        ),
+        backgroundColor: Colors.blueGrey[700],
       ),
       body: SingleChildScrollView(
-        child: ListenableBuilder(listenable: gamesRequest, 
-        builder: (context, _){
-          if(gamesRequest.games != null && gamesRequest.games!.isNotEmpty && gamesRequest.categories != null){
-            return Column(
-              children: [
-                ListView.builder(
-                  shrinkWrap: true,
-                  physics:const BouncingScrollPhysics(),
-                  itemCount: gamesRequest.games!.length,
-                  itemBuilder: (context, index){
-                    return Column(
-                      children: [
-                        SizedBox(
-                          width: 300,
-                          child: Image(image: NetworkImage(gamesRequest.games![index].image)),
-                        ),
-
-                        ElevatedButton(onPressed: (){
-                          Navigator.push(context, MaterialPageRoute(builder: ((context) =>const GamePage())));
-                          gameSelec = gamesRequest.games![index];
-                        }, child: const Text("Mais info")),
-                      ],
-                    );
-                  })
-              ],
-            );
-          }else{
-            return const Text("Carregando");
-          }
-        }),
+        child: ListenableBuilder(
+            listenable: gamesRequest,
+            builder: (context, _) {
+              if (gamesRequest.games != null &&
+                  gamesRequest.games!.isNotEmpty &&
+                  gamesRequest.categories != null) {
+                return Column(
+                  children: [
+                    ListView.builder(
+                        shrinkWrap: true,
+                        physics: const BouncingScrollPhysics(),
+                        itemCount: gamesRequest.games!.length,
+                        itemBuilder: (context, index) {
+                          return Column(
+                            children: [
+                              const Padding(padding: EdgeInsets.all(16)),
+                              ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: Colors.indigo[700],
+                                ),
+                                onPressed: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: ((context) =>
+                                              const GamePage())));
+                                  gameSelec = gamesRequest.games![index];
+                                },
+                                child: SizedBox(
+                                  width: 350,
+                                  child: Image(
+                                    image: NetworkImage(
+                                      gamesRequest.games![index].image,
+                                    ),
+                                    loadingBuilder: (BuildContext context,
+                                        Widget child,
+                                        ImageChunkEvent? loadingProgress) {
+                                      if (loadingProgress == null) {
+                                        return child;
+                                      } else {
+                                        return Center(
+                                          child: CircularProgressIndicator(
+                                            value: loadingProgress
+                                                        .expectedTotalBytes !=
+                                                    null
+                                                ? loadingProgress
+                                                        .cumulativeBytesLoaded /
+                                                    (loadingProgress
+                                                            .expectedTotalBytes ??
+                                                        1)
+                                                : null,
+                                          ),
+                                        );
+                                      }
+                                    },
+                                  ),
+                                ),
+                              ),
+                            ],
+                          );
+                        })
+                  ],
+                );
+              } else {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+            }),
       ),
     );
   }
