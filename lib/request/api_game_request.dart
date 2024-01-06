@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
@@ -10,7 +12,6 @@ class GamesRequest extends ChangeNotifier{
   List<Games>? games;
   List<String>? categories;
   UrlBase urlBase = UrlBase();
-  Games? gameSelec;
   int i = 1;
 
   Future<void> request() async{

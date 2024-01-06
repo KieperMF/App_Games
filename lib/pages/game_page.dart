@@ -26,8 +26,8 @@ class _GamePageState extends State<GamePage> {
                           width: 350,
                           child: Image(image: NetworkImage(gameSelec!.image)),
                         ),
-                        Text("Titulo: ${gameSelec!.title}", style: TextStyle(fontSize: 18),),
-                        Text("Descrição: ${gameSelec!.description}", style: TextStyle(fontSize: 18),),
+                        Text("Titulo: ${gameSelec!.title}", style:const TextStyle(fontSize: 18),),
+                        Text("Descrição: ${gameSelec!.description}", style:const TextStyle(fontSize: 18),),
                         const Text("Categorias:", style: TextStyle(fontSize: 18),),
                         ListView.builder(
                           shrinkWrap: true,
@@ -35,7 +35,7 @@ class _GamePageState extends State<GamePage> {
                           itemBuilder: (context, index){
                            return Column(
                             children: [
-                              Text(gameSelec!.categories[index], style: TextStyle(fontSize: 18),)
+                              Text(gameSelec!.categories[index], style:const TextStyle(fontSize: 18),)
                             ],
                            );
                         })

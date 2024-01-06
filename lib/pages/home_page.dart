@@ -45,22 +45,22 @@ class _HomePageState extends State<HomePage> {
                   itemBuilder: (context, index){
                     return Column(
                       children: [
-                        Container(
+                        SizedBox(
                           width: 300,
                           child: Image(image: NetworkImage(gamesRequest.games![index].image)),
                         ),
 
                         ElevatedButton(onPressed: (){
-                          Navigator.push(context, MaterialPageRoute(builder: ((context) => GamePage())));
+                          Navigator.push(context, MaterialPageRoute(builder: ((context) =>const GamePage())));
                           gameSelec = gamesRequest.games![index];
-                        }, child: Text("Mais info")),
+                        }, child: const Text("Mais info")),
                       ],
                     );
                   })
               ],
             );
           }else{
-            return Text("Carregando");
+            return const Text("Carregando");
           }
         }),
       ),
