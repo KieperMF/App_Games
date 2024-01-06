@@ -31,7 +31,6 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         title: const Text(
           'Melhores Jogos',
-          style: TextStyle(color: Colors.white),
         ),
         backgroundColor: Colors.blueGrey[700],
       ),
