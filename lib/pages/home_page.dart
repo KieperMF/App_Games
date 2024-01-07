@@ -17,7 +17,6 @@ class _HomePageState extends State<HomePage> {
   }
 
   final gamesRequest = GamesRequest();
-  int counter = 1;
 
   Future<void> loadGames() async {
     await gamesRequest.request();
